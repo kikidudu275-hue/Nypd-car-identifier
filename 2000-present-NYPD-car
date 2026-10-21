@@ -1,0 +1,99 @@
+import json
+import argparse
+
+with open("nypd_vehicles.json", "r", encoding="utf-8") as f:
+    VEHICLES = json.load(f)
+
+def list_all():
+    print("--- NYPD Fleet 2000-2026 ---\n")
+    for v in VEHICLES:
+        print(f"[{v['id']}] {v['name']} ({v['years']})")
+        print(f"  > {v['type']} | {v['role']}\n")
+
+def identify(query):
+    query = query.lower()
+    for v in VEHICLES:
+        if query in v['name'].lower() or query in v['id'].lower() or query in v['years']:
+            print(f"\n✅ Trouvé: {v['name']}")
+            print(f"Années: {v['years']}")
+            print(f"Type: {v['type']}")
+            print(f"Rôle: {v['role']}")
+            print(f"Livrée: {v['livery']}")
+            return
+    print("❌ Véhicule non trouvé. Essaie: crown, charger, explorer, impala, tahoe")
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="NYPD Vehicle Identifier")
+    parser.add_argument("--find", type=str, help="Cherche un véhicule (ex: charger, explorer, 2005)")
+    args = parser.parse_args()
+
+    if args.find:
+        identify(args.find)
+    else:
+        list_all()
+[
+  {
+    "id": "CVPI",
+    "name": "Ford Crown Victoria Police Interceptor",
+    "years": "1998-2011",
+    "type": "RWD Sedan 4.6L V8",
+    "role": "Patrouille principale années 2000",
+    "livery": "Blanc avec bande bleue NYPD"
+  },
+  {
+    "id": "IMPALA",
+    "name": "Chevrolet Impala 9C1",
+    "years": "2000-2005 / 2006-2016",
+    "type": "FWD Sedan 3.8L/3.6L V6",
+    "role": "Patrouille banalisée + marquée",
+    "livery": "Blanc/bleu NYPD"
+  },
+  {
+    "id": "CHARGER",
+    "name": "Dodge Charger Pursuit",
+    "years": "2006-2023",
+    "type": "RWD/AWD 5.7L V8",
+    "role": "Poursuite / Highway",
+    "livery": "Bleu/Blanc NYPD"
+  },
+  {
+    "id": "TAURUS",
+    "name": "Ford Police Interceptor Sedan",
+    "years": "2013-2019",
+    "type": "AWD 3.7L V6",
+    "role": "Patrouille sedan",
+    "livery": "Bleu nuit / Blanc"
+  },
+  {
+    "id": "EXPLORER",
+    "name": "Ford Police Interceptor Utility",
+    "years": "2013-present",
+    "type": "AWD SUV 3.7L/3.3L Hybrid",
+    "role": "80% de la flotte actuelle",
+    "livery": "Standard NYPD"
+  },
+  {
+    "id": "TAHOE",
+    "name": "Chevrolet Tahoe PPV",
+    "years": "2005-present",
+    "type": "AWD SUV 5.3L V8",
+    "role": "ESU / Highway / Superviseur",
+    "livery": "NYPD"
+  },
+  {
+    "id": "MACH-E",
+    "name": "Ford Mustang Mach-E",
+    "years": "2020-present",
+    "type": "EV AWD",
+    "role": "Patrouille verte / pilote",
+    "livery": "NYPD Green Initiative"
+  },
+  {
+    "id": "SMART",
+    "name": "Smart Fortwo",
+    "years": "2010-present",
+    "type": "Compact Gas/EV",
+    "role": "Parking Enforcement",
+    "livery": "Blanc NYPD PARKING"
+  }
+]
